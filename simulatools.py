@@ -1,4 +1,4 @@
-from traces import *
+from traces import Trace
 from policies import *
 import fire
 import urllib
@@ -14,6 +14,8 @@ from enum import Enum
 from pprint import pprint
 import matplotlib.pyplot as plt
 import pickle
+import requests
+from url_requests import url_retrieve
 
 with open(os.path.join(os.path.dirname(__file__), 'conf.json')) as conf_file:
     local_conf = json.load(conf_file)
@@ -79,7 +81,7 @@ def download_single_trace(trace, path=None):
         if not os.path.exists(path + trace.format()):
             os.makedirs(path + trace.format())
         print('Downloading ' + trace.name + '...')
-        urllib.request.urlretrieve(trace.url() + '?dl=1', path + trace.format() + os.sep + trace.file())
+        url_retrieve(trace.url() + '?dl=1', path + trace.format() + os.sep + trace.file())
         print(trace.name + ' downloaded')
 
 def parse_traces(traces):
